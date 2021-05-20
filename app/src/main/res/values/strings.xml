@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Discover Croatia</string>
+    <string name="comment">Comment</string>
+    <string name="open">Open</string>
+    <string name="rate">Rate</string>
+    <string name="map">Map</string>
+    <string name="add_new_location">Add new location</string>
+    <string name="enter_your_rating">Enter your rating:</string>
+    <string name="submit">Submit</string>
+    <string name="upload_image">Upload images</string>
+    <string name="report_location">Report location</string>
+    <string name="image">Image</string>
+    <string name="msgNoRatings">There are no ratings</string>
+    <string name="msgRatings1">out of</string>
+    <string name="msgRatings2">ratings.</string>
+    <string name="msgNoDescription">No description</string>
+    <string name="msgRating11">Rating:</string>
+    <string name="msgNumComments">Number of comments:</string>
+    <string name="msgNoComments">No comments</string>
+    <string name="description_optional">Description (optional)</string>
+    <string name="name">Name</string>
+    <string name="attach_an_image_optional">Attach images (optional)</string>
+    <string name="enter_your_comment">Enter your comment</string>
+    <string name="openingooglemaps">Open in Google Maps</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
