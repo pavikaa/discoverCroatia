@@ -1,4 +1,4 @@
-package com.markopavicic.myapplication;
+package com.markopavicic.discovercroatia;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +36,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     public int getItemCount() {
         return commentsList.size();
     }
-    public void addData(List<String> commentsList,List<String> datesList)
-    {
+
+    public void addData(List<String> commentsList, List<String> datesList) {
         this.commentsList.clear();
         this.datesList.clear();
         this.commentsList.addAll(commentsList);

@@ -1,4 +1,4 @@
-package com.markopavicic.myapplication;
+package com.markopavicic.discovercroatia;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -62,6 +62,7 @@ public class MapFragment extends Fragment {
 
         Objects.requireNonNull(supportMapFragment).getMapAsync(googleMap -> {
             mMap = googleMap;
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             setUpClusterer();
             checkNetworkConnection();
 
@@ -72,6 +73,7 @@ public class MapFragment extends Fragment {
     private void loadLocations() {
         reference.child("locations").addListenerForSingleValueEvent(new ValueEventListener() {
             Boolean check = false;
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot locationSnapshot : snapshot.getChildren()) {
@@ -281,12 +283,11 @@ public class MapFragment extends Fragment {
         // Add cluster items (markers) to the cluster manager.
         loadLocations();
     }
-    private void checkNetworkConnection()
-    {
+
+    private void checkNetworkConnection() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if(networkInfo==null || !networkInfo.isConnected())
-        {
+        if (networkInfo == null || !networkInfo.isConnected()) {
             Toast.makeText(getContext(), "Spojite se na internet i ponovo pokrenite aplikaciju.", Toast.LENGTH_LONG).show();
             getActivity().finish();
             System.exit(0);

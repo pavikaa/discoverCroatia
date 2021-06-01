@@ -1,4 +1,6 @@
-package com.markopavicic.myapplication;
+package com.markopavicic.discovercroatia;
+
+import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -21,7 +23,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -58,8 +59,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import static android.app.Activity.RESULT_OK;
-
 public class AddLocationFragment extends Fragment {
     private GoogleMap mMap;
     private LatLng location, markerLocation;
@@ -84,7 +83,7 @@ public class AddLocationFragment extends Fragment {
         databaseReference = database.getReference();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        ImageButton imageButton = (ImageButton) view.findViewById(R.id.addLocationButton);
+        ImageButton imageButton = view.findViewById(R.id.addLocationButton);
         imageButton.setVisibility(View.INVISIBLE);
         imageButton.setOnClickListener(v -> {
             if (markerLocation != null)
@@ -96,6 +95,7 @@ public class AddLocationFragment extends Fragment {
                 getChildFragmentManager().findFragmentById(R.id.google_map_add);
         Objects.requireNonNull(supportMapFragment).getMapAsync(googleMap -> {
             mMap = googleMap;
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             checkMyPermission();
             Toast.makeText(getActivity(), "Zadržite na karti kako biste dodali marker.", Toast.LENGTH_SHORT).show();
             mMap.setOnMyLocationClickListener(location -> {
@@ -177,7 +177,7 @@ public class AddLocationFragment extends Fragment {
 
             @Override
             public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-            permissionToken.continuePermissionRequest();
+                permissionToken.continuePermissionRequest();
             }
         }).check();
     }
@@ -241,14 +241,14 @@ public class AddLocationFragment extends Fragment {
         View bottomSheetView = LayoutInflater.from(getActivity().getApplicationContext())
                 .inflate(
                         R.layout.layout_bottom_sheet_add,
-                        (LinearLayout) getActivity().findViewById(R.id.bottomSheetContainerAdd)
+                        getActivity().findViewById(R.id.bottomSheetContainerAdd)
                 );
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        etName = (EditText) bottomSheetView.findViewById(R.id.etName);
-        etDescription = (EditText) bottomSheetView.findViewById(R.id.etDescription);
-        Button submitButton = (Button) bottomSheetView.findViewById(R.id.btnSubmit);
+        etName = bottomSheetView.findViewById(R.id.etName);
+        etDescription = bottomSheetView.findViewById(R.id.etDescription);
+        Button submitButton = bottomSheetView.findViewById(R.id.btnSubmit);
 
-        ImageButton attach = (ImageButton) bottomSheetView.findViewById(R.id.ibAttach);
+        ImageButton attach = bottomSheetView.findViewById(R.id.ibAttach);
         attach.setOnClickListener(v -> choosePicture());
         submitButton.setOnClickListener(v -> {
             if (etName.getText().toString().trim().equals("")) {
@@ -313,12 +313,11 @@ public class AddLocationFragment extends Fragment {
             return ref.getDownloadUrl();
         });
     }
-    private void checkNetworkConnection()
-    {
+
+    private void checkNetworkConnection() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if(networkInfo==null || !networkInfo.isConnected())
-        {
+        if (networkInfo == null || !networkInfo.isConnected()) {
             Toast.makeText(getContext(), "Spojite se na internet i ponovo pokrenite aplikaciju.", Toast.LENGTH_LONG).show();
             getActivity().finish();
             System.exit(0);

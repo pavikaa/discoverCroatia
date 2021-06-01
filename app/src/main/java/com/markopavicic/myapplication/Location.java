@@ -1,4 +1,4 @@
-package com.markopavicic.myapplication;
+package com.markopavicic.discovercroatia;
 
 public class Location {
     private final String name;

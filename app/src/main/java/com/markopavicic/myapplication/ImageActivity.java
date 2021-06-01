@@ -1,4 +1,4 @@
-package com.markopavicic.myapplication;
+package com.markopavicic.discovercroatia;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,7 +15,7 @@ public class ImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
-        ImageView imageView = (ImageView) findViewById(R.id.ivImage);
+        ImageView imageView = findViewById(R.id.ivImage);
         Bitmap b = BitmapFactory.decodeByteArray(
                 getIntent().getByteArrayExtra("byteArray"), 0, getIntent().getByteArrayExtra("byteArray").length);
         imageView.setImageBitmap(b);

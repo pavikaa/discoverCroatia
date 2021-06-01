@@ -1,4 +1,4 @@
-package com.markopavicic.myapplication;
+package com.markopavicic.discovercroatia;
 
 import android.content.Context;
 import android.content.Intent;
@@ -46,14 +46,14 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class LocationActivity extends AppCompatActivity {
+    private final List<String> commentsList = new ArrayList<>();
+    private final List<String> datesList = new ArrayList<>();
+    private final List<String> imagesList = new ArrayList<>();
     private RecyclerAdapter adapter;
     private Double lat, lng;
     private TextView laName, laDescription, laRatings;
     private RatingBar laRating;
     private String name;
-    private final List<String> commentsList = new ArrayList<>();
-    private final List<String> datesList = new ArrayList<>();
-    private final List<String> imagesList = new ArrayList<>();
     private Uri imageUri;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -71,12 +71,12 @@ public class LocationActivity extends AppCompatActivity {
         checkNetworkConnection();
         lat = getIntent().getDoubleExtra("lat", 0);
         lng = getIntent().getDoubleExtra("lng", 0);
-        laName = (TextView) findViewById(R.id.laName);
-        laDescription = (TextView) findViewById(R.id.laDescription);
-        laRating = (RatingBar) findViewById(R.id.laRating);
-        laRatings = (TextView) findViewById(R.id.laRatings);
-        ImageButton ibReport = (ImageButton) findViewById(R.id.ibReport);
-        ImageButton ibUpload = (ImageButton) findViewById(R.id.ibUpload);
+        laName = findViewById(R.id.laName);
+        laDescription = findViewById(R.id.laDescription);
+        laRating = findViewById(R.id.laRating);
+        laRatings = findViewById(R.id.laRatings);
+        ImageButton ibReport = findViewById(R.id.ibReport);
+        ImageButton ibUpload = findViewById(R.id.ibUpload);
         RecyclerView recycler = findViewById(R.id.rvComments);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerAdapter();
@@ -124,7 +124,7 @@ public class LocationActivity extends AppCompatActivity {
                             laRatings.setText(R.string.msgNoRatings);
                         } else {
                             laRating.setRating(rating);
-                            laRatings.setText(String.format("%.2f",rating) + "/5 " + getString(R.string.msgRatings1) + " " + Objects.requireNonNull(ratings).toString() + " " + getString(R.string.msgRatings2));
+                            laRatings.setText(String.format("%.2f", rating) + "/5 " + getString(R.string.msgRatings1) + " " + Objects.requireNonNull(ratings).toString() + " " + getString(R.string.msgRatings2));
                         }
                         commentsList.clear();
                         datesList.clear();
@@ -140,7 +140,7 @@ public class LocationActivity extends AppCompatActivity {
                         }
                         if (!imagesList.isEmpty()) {
 
-                            layout = (LinearLayout) findViewById(R.id.lvGallery);
+                            layout = findViewById(R.id.lvGallery);
                             layout.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 220, getResources().getDisplayMetrics());
                             layout.removeAllViews();
                             for (int i = 0; i < imagesList.size(); i++) {
@@ -265,12 +265,11 @@ public class LocationActivity extends AppCompatActivity {
             return ref.getDownloadUrl();
         });
     }
-    private void checkNetworkConnection()
-    {
+
+    private void checkNetworkConnection() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if(networkInfo==null || !networkInfo.isConnected())
-        {
+        if (networkInfo == null || !networkInfo.isConnected()) {
             Toast.makeText(getApplicationContext(), "Spojite se na internet i ponovo pokrenite aplikaciju.", Toast.LENGTH_LONG).show();
             finish();
             System.exit(0);
